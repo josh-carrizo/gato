@@ -32,6 +32,10 @@
 				font-weight: bold;
 				color: #CCC;
 			}
+			.celda:hover {
+				background-color:cornflowerblue;
+
+			}
 			.celda.ganadora {
 				background: linear-gradient(0deg, rgba(87,85,85,1) 1%, rgba(231,231,3,1) 100%);
 			}
@@ -90,10 +94,10 @@
 						<div class="tablero">
 							<div class="row">
 								<div class="col-4">
-									<div class="celda">X</div>
+									<div class="celda"></div>
 								</div>
 								<div class="col-4">
-									<div class="celda ganadora">O</div>
+									<div class="celda"></div>
 								</div>
 								<div class="col-4">
 									<div class="celda"></div>
@@ -104,7 +108,7 @@
 									<div class="celda"></div>
 								</div>
 								<div class="col-4">
-									<div class="celda ganadora">O</div>
+									<div class="celda"></div>
 								</div>
 								<div class="col-4">
 									<div class="celda"></div>
@@ -112,10 +116,10 @@
 							</div>
 							<div class="row">
 								<div class="col-4">
-									<div class="celda">X</div>
+									<div class="celda"></div>
 								</div>
 								<div class="col-4">
-									<div class="celda ganadora">O</div>
+									<div class="celda"></div>
 								</div>
 								<div class="col-4">
 									<div class="celda"></div>
@@ -167,6 +171,19 @@
 		<script>
 			// Acá va nuestro código
 			// $('#staticBackdrop').modal()
+
+			$('.celda').on('click', function() {
+				var siguiente = $('.siguiente').html();
+
+				$(this).html(siguiente);
+
+				if (siguiente == 'O'){
+					$('.siguiente').html('X');
+				} else {
+					$('.siguiente').html('O');
+				}
+
+			});
 		</script>
 	</body>
 </html>
