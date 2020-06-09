@@ -143,7 +143,7 @@
 		</div>
 
 		<!-- Modal -->
-		<div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+		<div class="modal fade" id="modal-ganador" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
 			<div class="modal-dialog">
 				<div class="modal-content">
 					<div class="modal-header">
@@ -172,16 +172,83 @@
 			// Acá va nuestro código
 			// $('#staticBackdrop').modal()
 
-			$('.celda').on('click', function() {
-				var siguiente = $('.siguiente').html();
+			function traer_valores() {
+				var valores = [];
+				// recorrer las celdas trayendome el valor de cada una
+				$('.celda').each(function() {
 
+					var valor_celda = $(this).html();
+					valores.push(valor_celda);
+
+				});
+				return valores;
+			}
+
+			function ganar_jugador_O(num1, num2, num3) {
+				$('#modal-ganador').modal();
+				$('.celda:eq(' + num1 + ')').addClass('ganadora');
+				$('.celda:eq(' + num2 + ')').addClass('ganadora');
+				$('.celda:eq(' + num3 + ')').addClass('ganadora');
+			}
+
+			$('.celda').on('click', function() {
+				// verificar que celda no este ocupada
+				var contenido_celda = $(this).html();
+				if (contenido_celda != '') {
+					return;
+				}
+
+				// ver a que jugador le toca
+				var siguiente = $('.siguiente').html();
+				// jugar
 				$(this).html(siguiente);
 
+				// cambiar el valor del jugador siguiente
 				if (siguiente == 'O'){
 					$('.siguiente').html('X');
 				} else {
 					$('.siguiente').html('O');
 				}
+
+				// verificar si gano el jugador O
+				var valores = traer_valores();
+				// primera fila
+				if (valores[0] == 'O' && valores[1] == 'O' && valores[2] == 'O') {
+					ganar_jugador_O('0', '1', '2');
+				
+				// segunda fila
+				} else if (valores[3] == 'O' && valores[4] == 'O' && valores[5] == 'O') {
+					ganar_jugador_O('3', '4', '5');
+				
+				// tercera fila
+				} else if (valores[6] == 'O' && valores[7] == 'O' && valores[8] == 'O') {
+					ganar_jugador_O('6', '7', '8');
+				}
+				
+				// primera columna
+				else if (valores[0] == 'O' && valores[3] == 'O' && valores[6] == 'O') {
+					ganar_jugador_O('0', '3', '6');
+				}
+				// segunda columna
+				else if (valores[1] == 'O' && valores[4] == 'O' && valores[7] == 'O') {
+					ganar_jugador_O('1', '4', '7');
+				}
+				// tercera columna
+				else if (valores[2] == 'O' && valores[5] == 'O' && valores[8] == 'O') {
+					ganar_jugador_O('2', '5', '8');
+				}
+
+				// diagonal ascendente
+				else if (valores[2] == 'O' && valores[4] == 'O' && valores[6] == 'O') {
+					ganar_jugador_O('2', '4', '6');
+				}
+
+				// diagonal descendiente
+				else if (valores[0] == 'O' && valores[4] == 'O' && valores[8] == 'O') {
+					ganar_jugador_O('0', '4', '8');
+				}
+
+				// verificar si gano el jugador X
 
 			});
 		</script>
