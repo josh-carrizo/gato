@@ -87,6 +87,14 @@
 							<p>Siguiente Jugador</p>
 							<p class="siguiente">O</p>
 						</div>
+						<div class="card-body">
+							Pendientes:
+							<ul>
+								<li>Botón Reiniciar (dejar celdas en blanco, hay_ganador en false, quitar clase ganadora</li>
+								<li>Verificar si gana X</li>
+								<li>Modificar puntajes parciales</li>
+							</ul>
+						</div>
 					</div>
 				</div>
 				<div class="col-6">
@@ -170,7 +178,8 @@
 		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
 		<script>
 			// Acá va nuestro código
-			// $('#staticBackdrop').modal()
+
+			var hay_ganador = false;  // indica si alguien ya gano o no
 
 			function traer_valores() {
 				var valores = [];
@@ -189,9 +198,15 @@
 				$('.celda:eq(' + num1 + ')').addClass('ganadora');
 				$('.celda:eq(' + num2 + ')').addClass('ganadora');
 				$('.celda:eq(' + num3 + ')').addClass('ganadora');
+				hay_ganador = true;
 			}
 
 			$('.celda').on('click', function() {
+				// chequeo que todavia nadie ha ganado
+				if (hay_ganador) {
+					return;
+				}
+
 				// verificar que celda no este ocupada
 				var contenido_celda = $(this).html();
 				if (contenido_celda != '') {
