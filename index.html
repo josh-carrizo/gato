@@ -74,7 +74,7 @@
 				</ul>
 				<form class="form-inline my-2 my-lg-0">
 					<input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-					<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Iniciar</button>
+					<button id="reiniciar" class="btn btn-outline-success my-2 my-sm-0" type="button">Reiniciar</button>
 				</form>
 			</div>
 		</nav>
@@ -201,6 +201,45 @@
 				hay_ganador = true;
 			}
 
+			function verificar_si_gana(jugador) {
+				var valores = traer_valores();
+				// primera fila
+				if (valores[0] == jugador && valores[1] == jugador && valores[2] == jugador) {
+					ganar_jugador_O('0', '1', '2');
+				
+				// segunda fila
+				} else if (valores[3] == jugador && valores[4] == jugador && valores[5] == jugador) {
+					ganar_jugador_O('3', '4', '5');
+				
+				// tercera fila
+				} else if (valores[6] == jugador && valores[7] == jugador && valores[8] == jugador) {
+					ganar_jugador_O('6', '7', '8');
+				}
+				
+				// primera columna
+				else if (valores[0] == jugador && valores[3] == jugador && valores[6] == jugador) {
+					ganar_jugador_O('0', '3', '6');
+				}
+				// segunda columna
+				else if (valores[1] == jugador && valores[4] == jugador && valores[7] == jugador) {
+					ganar_jugador_O('1', '4', '7');
+				}
+				// tercera columna
+				else if (valores[2] == jugador && valores[5] == jugador && valores[8] == jugador) {
+					ganar_jugador_O('2', '5', '8');
+				}
+
+				// diagonal ascendente
+				else if (valores[2] == jugador && valores[4] == jugador && valores[6] == jugador) {
+					ganar_jugador_O('2', '4', '6');
+				}
+
+				// diagonal descendente
+				else if (valores[0] == jugador && valores[4] == jugador && valores[8] == jugador) {
+					ganar_jugador_O('0', '4', '8');
+				}
+			}
+
 			$('.celda').on('click', function() {
 				// chequeo que todavia nadie ha ganado
 				if (hay_ganador) {
@@ -225,46 +264,22 @@
 					$('.siguiente').html('O');
 				}
 
+				
 				// verificar si gano el jugador O
-				var valores = traer_valores();
-				// primera fila
-				if (valores[0] == 'O' && valores[1] == 'O' && valores[2] == 'O') {
-					ganar_jugador_O('0', '1', '2');
-				
-				// segunda fila
-				} else if (valores[3] == 'O' && valores[4] == 'O' && valores[5] == 'O') {
-					ganar_jugador_O('3', '4', '5');
-				
-				// tercera fila
-				} else if (valores[6] == 'O' && valores[7] == 'O' && valores[8] == 'O') {
-					ganar_jugador_O('6', '7', '8');
-				}
-				
-				// primera columna
-				else if (valores[0] == 'O' && valores[3] == 'O' && valores[6] == 'O') {
-					ganar_jugador_O('0', '3', '6');
-				}
-				// segunda columna
-				else if (valores[1] == 'O' && valores[4] == 'O' && valores[7] == 'O') {
-					ganar_jugador_O('1', '4', '7');
-				}
-				// tercera columna
-				else if (valores[2] == 'O' && valores[5] == 'O' && valores[8] == 'O') {
-					ganar_jugador_O('2', '5', '8');
-				}
-
-				// diagonal ascendente
-				else if (valores[2] == 'O' && valores[4] == 'O' && valores[6] == 'O') {
-					ganar_jugador_O('2', '4', '6');
-				}
-
-				// diagonal descendiente
-				else if (valores[0] == 'O' && valores[4] == 'O' && valores[8] == 'O') {
-					ganar_jugador_O('0', '4', '8');
-				}
-
+				verificar_si_gana('O');
 				// verificar si gano el jugador X
+				verificar_si_gana('X');
 
+			});
+		
+			$('#reiniciar').on('click', function() {
+				// acá vamos a reiniciar el juego
+				// 1. limpiar el contenido interno de las celdas
+				$('.celda').html('');
+				// 2. sacar clase "ganadora" de las celdas
+				$('.celda').removeClass('ganadora');
+				
+				hay_ganador = false;
 			});
 		</script>
 	</body>
