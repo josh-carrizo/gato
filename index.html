@@ -183,7 +183,7 @@
 
 			function traer_valores() {
 				var valores = [];
-				// recorrer las celdas trayendome el valor de cada una
+				// recorrer las celdas trayendome el valor de cada una-- El each se usa para las css 
 				$('.celda').each(function() {
 
 					var valor_celda = $(this).html();
@@ -201,31 +201,7 @@
 				hay_ganador = true;
 			}
 
-			$('.celda').on('click', function() {
-				// chequeo que todavia nadie ha ganado
-				if (hay_ganador) {
-					return;
-				}
-
-				// verificar que celda no este ocupada
-				var contenido_celda = $(this).html();
-				if (contenido_celda != '') {
-					return;
-				}
-
-				// ver a que jugador le toca
-				var siguiente = $('.siguiente').html();
-				// jugar
-				$(this).html(siguiente);
-
-				// cambiar el valor del jugador siguiente
-				if (siguiente == 'O'){
-					$('.siguiente').html('X');
-				} else {
-					$('.siguiente').html('O');
-				}
-
-				// verificar si gano el jugador O
+			function verificar_si_gama(jugador){
 				var valores = traer_valores();
 				// primera fila
 				if (valores[0] == 'O' && valores[1] == 'O' && valores[2] == 'O') {
@@ -258,10 +234,43 @@
 					ganar_jugador_O('2', '4', '6');
 				}
 
-				// diagonal descendiente
+				// diagonal descendente
 				else if (valores[0] == 'O' && valores[4] == 'O' && valores[8] == 'O') {
 					ganar_jugador_O('0', '4', '8');
 				}
+
+
+			}
+
+			$('.celda').on('click', function() {
+				// chequeo que todavia nadie ha ganado
+				if (hay_ganador) {
+					return;
+				}
+
+				// verificar que celda no este ocupada
+				var contenido_celda = $(this).html();
+				if (contenido_celda != '') {
+					return;
+				}
+
+				// ver a que jugador le toca
+				var siguiente = $('.siguiente').html();
+				// jugar
+				$(this).html(siguiente);
+
+				// cambiar el valor del jugador siguiente
+				if (siguiente == 'O'){
+					$('.siguiente').html('X');
+				} else {
+					$('.siguiente').html('O');
+				}
+
+				// verificar si gano el jugador O
+				var valores = traer_valores();
+				verificar_si_gama('O');
+				verificar_si_gama('X');
+
 
 				// verificar si gano el jugador X
 
